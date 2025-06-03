@@ -9,7 +9,135 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      ats_analyses: {
+        Row: {
+          ats_score: number | null
+          completed_at: string | null
+          created_at: string | null
+          detailed_feedback: Json | null
+          extracted_text: string | null
+          id: string
+          job_description_id: string | null
+          keywords_found: string[] | null
+          keywords_missing: string[] | null
+          resume_id: string
+          section_scores: Json | null
+          status: Database["public"]["Enums"]["analysis_status"] | null
+          suggestions: string[] | null
+        }
+        Insert: {
+          ats_score?: number | null
+          completed_at?: string | null
+          created_at?: string | null
+          detailed_feedback?: Json | null
+          extracted_text?: string | null
+          id?: string
+          job_description_id?: string | null
+          keywords_found?: string[] | null
+          keywords_missing?: string[] | null
+          resume_id: string
+          section_scores?: Json | null
+          status?: Database["public"]["Enums"]["analysis_status"] | null
+          suggestions?: string[] | null
+        }
+        Update: {
+          ats_score?: number | null
+          completed_at?: string | null
+          created_at?: string | null
+          detailed_feedback?: Json | null
+          extracted_text?: string | null
+          id?: string
+          job_description_id?: string | null
+          keywords_found?: string[] | null
+          keywords_missing?: string[] | null
+          resume_id?: string
+          section_scores?: Json | null
+          status?: Database["public"]["Enums"]["analysis_status"] | null
+          suggestions?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ats_analyses_job_description_id_fkey"
+            columns: ["job_description_id"]
+            isOneToOne: false
+            referencedRelation: "job_descriptions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ats_analyses_resume_id_fkey"
+            columns: ["resume_id"]
+            isOneToOne: false
+            referencedRelation: "resumes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_descriptions: {
+        Row: {
+          company: string | null
+          created_at: string | null
+          description: string
+          id: string
+          keywords: string[] | null
+          requirements: string[] | null
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string | null
+          description: string
+          id?: string
+          keywords?: string[] | null
+          requirements?: string[] | null
+          title: string
+          user_id?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string | null
+          description?: string
+          id?: string
+          keywords?: string[] | null
+          requirements?: string[] | null
+          title?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      resumes: {
+        Row: {
+          file_size: number
+          file_type: Database["public"]["Enums"]["file_type"]
+          file_url: string
+          filename: string
+          id: string
+          updated_at: string | null
+          uploaded_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          file_size: number
+          file_type: Database["public"]["Enums"]["file_type"]
+          file_url: string
+          filename: string
+          id?: string
+          updated_at?: string | null
+          uploaded_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          file_size?: number
+          file_type?: Database["public"]["Enums"]["file_type"]
+          file_url?: string
+          filename?: string
+          id?: string
+          updated_at?: string | null
+          uploaded_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +146,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      analysis_status: "pending" | "processing" | "completed" | "failed"
+      file_type: "pdf" | "doc" | "docx"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +262,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      analysis_status: ["pending", "processing", "completed", "failed"],
+      file_type: ["pdf", "doc", "docx"],
+    },
   },
 } as const
