@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, FileText, Target, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
@@ -29,11 +30,13 @@ export const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-              <FileText className="w-5 h-5 mr-2" />
-              Check My Resume Score
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
+            <Link to="/upload">
+              <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                <FileText className="w-5 h-5 mr-2" />
+                Check My Resume Score
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
             
             <Button variant="outline" size="lg" className="border-purple-500/50 text-purple-300 hover:bg-purple-500/10 px-8 py-4 text-lg font-semibold rounded-xl">
               <Target className="w-5 h-5 mr-2" />
