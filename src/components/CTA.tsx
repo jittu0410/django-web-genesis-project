@@ -1,14 +1,11 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, FileText, Upload } from "lucide-react";
 import { Link } from "react-router-dom";
-
 export const CTA = () => {
-  return (
-    <section className="py-20 bg-gradient-to-br from-purple-950 via-gray-900 to-gray-950 relative overflow-hidden">
+  return <section className="py-20 bg-gradient-to-br from-purple-950 via-gray-900 to-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-20" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23A855F7' fill-opacity='0.05'%3E%3Cpath d='M40 40c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm20 0c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-      }}></div>
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23A855F7' fill-opacity='0.05'%3E%3Cpath d='M40 40c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm20 0c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+    }}></div>
       
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-4xl mx-auto">
@@ -30,10 +27,7 @@ export const CTA = () => {
             </Link>
             
             <Link to="/dashboard">
-              <Button variant="outline" size="lg" className="border-purple-500/50 text-purple-300 hover:bg-purple-500/10 px-8 py-4 text-lg font-semibold rounded-xl group">
-                <FileText className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                Premium Features
-              </Button>
+              
             </Link>
           </div>
           
@@ -59,6 +53,5 @@ export const CTA = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
