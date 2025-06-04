@@ -149,7 +149,7 @@ const Upload = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                   {Object.entries(analysisResult.section_scores).map(([section, score]) => (
                     <div key={section} className="bg-gray-700/50 rounded-lg p-3 text-center">
-                      <div className="text-xl font-bold text-purple-300">{score}%</div>
+                      <div className="text-xl font-bold text-purple-300">{score as number}%</div>
                       <div className="text-xs text-gray-400 capitalize">
                         {section.replace('_', ' ')}
                       </div>
