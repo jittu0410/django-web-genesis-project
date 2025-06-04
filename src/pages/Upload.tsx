@@ -42,7 +42,6 @@ const Upload = () => {
         section_scores: {
           contact_info: 95,
           summary: 80,
-          experience: 85,
           education: 90,
           skills: 75,
           formatting: 88
