@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ResumeUpload } from '@/components/ResumeUpload';
 import { Button } from '@/components/ui/button';
@@ -153,7 +152,7 @@ Various professional skills and competencies`
               Upload Your Resume
             </h1>
             <p className="text-xl text-gray-300">
-              Get personalized ATS score and tailored suggestions
+              Get your ATS compatibility score
             </p>
           </div>
 
@@ -204,7 +203,7 @@ Various professional skills and competencies`
             <div className="space-y-6 mb-8">
               <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
                 <h3 className="text-2xl font-bold text-white mb-4 text-center">
-                  Your Personalized ATS Analysis
+                  ATS Analysis Results
                 </h3>
                 
                 {/* ATS Score */}
@@ -216,11 +215,6 @@ Various professional skills and competencies`
                     {analysisResult.ats_score}%
                   </div>
                   <p className="text-gray-300">ATS Compatibility Score</p>
-                  <p className="text-sm text-gray-400 mt-1">
-                    {analysisResult.ats_score >= 80 ? 'Excellent! Your resume is highly ATS-compatible' :
-                     analysisResult.ats_score >= 60 ? 'Good score with room for improvement' :
-                     'Needs improvement for better ATS compatibility'}
-                  </p>
                 </div>
 
                 {/* Section Scores */}
@@ -240,43 +234,6 @@ Various professional skills and competencies`
                   ))}
                 </div>
 
-                {/* Specific Feedback */}
-                {analysisResult.specific_feedback && (
-                  <div className="mb-6 space-y-4">
-                    {analysisResult.specific_feedback.strengths.length > 0 && (
-                      <div>
-                        <h4 className="font-semibold text-green-400 mb-2 flex items-center">
-                          ✓ Your Strengths
-                        </h4>
-                        <ul className="space-y-1">
-                          {analysisResult.specific_feedback.strengths.map((strength: string, index: number) => (
-                            <li key={index} className="text-green-300 text-sm flex items-start">
-                              <span className="text-green-400 mr-2">•</span>
-                              {strength}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {analysisResult.specific_feedback.weaknesses.length > 0 && (
-                      <div>
-                        <h4 className="font-semibold text-orange-400 mb-2 flex items-center">
-                          ⚠ Areas for Improvement
-                        </h4>
-                        <ul className="space-y-1">
-                          {analysisResult.specific_feedback.weaknesses.map((weakness: string, index: number) => (
-                            <li key={index} className="text-orange-300 text-sm flex items-start">
-                              <span className="text-orange-400 mr-2">•</span>
-                              {weakness}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                )}
-
                 {/* Keywords */}
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   <div>
@@ -290,28 +247,15 @@ Various professional skills and competencies`
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-orange-400 mb-2">Suggested Keywords to Add</h4>
+                    <h4 className="font-semibold text-red-400 mb-2">Keywords Missing</h4>
                     <div className="flex flex-wrap gap-2">
                       {analysisResult.keywords_missing.map((keyword: string, index: number) => (
-                        <span key={index} className="bg-orange-900/30 text-orange-300 px-2 py-1 rounded-md text-sm">
+                        <span key={index} className="bg-red-900/30 text-red-300 px-2 py-1 rounded-md text-sm">
                           {keyword}
                         </span>
                       ))}
                     </div>
                   </div>
-                </div>
-
-                {/* Personalized Suggestions */}
-                <div>
-                  <h4 className="font-semibold text-white mb-3">Personalized Improvement Suggestions</h4>
-                  <ul className="space-y-2">
-                    {analysisResult.suggestions.map((suggestion: string, index: number) => (
-                      <li key={index} className="text-gray-300 text-sm flex items-start">
-                        <span className="text-purple-400 mr-2">•</span>
-                        {suggestion}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
 
                 {/* Try Again Button */}
@@ -336,9 +280,9 @@ Various professional skills and competencies`
             <h3 className="font-semibold text-white mb-3">How it works:</h3>
             <ol className="text-sm text-gray-300 space-y-2">
               <li>1. Upload your resume (PDF, DOC, or DOCX)</li>
-              <li>2. Our AI analyzes your actual content and structure</li>
-              <li>3. Get personalized feedback specific to YOUR resume</li>
-              <li>4. Receive tailored suggestions for improvement</li>
+              <li>2. Our AI analyzes your content and structure</li>
+              <li>3. Get your ATS compatibility score</li>
+              <li>4. See keyword analysis results</li>
             </ol>
           </div>
         </div>
