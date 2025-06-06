@@ -1,4 +1,3 @@
-
 interface ResumeAnalysis {
   ats_score: number;
   keywords_found: string[];
@@ -6,7 +5,6 @@ interface ResumeAnalysis {
   section_scores: {
     contact_info: number;
     summary: number;
-    experience: number;
     education: number;
     skills: number;
     formatting: number;
@@ -145,11 +143,10 @@ const extractJobDescriptionKeywords = (jobDescription: string): string[] => {
 const analyzeSections = (resumeText: string) => {
   const text = resumeText.toLowerCase();
   
-  // Check for essential sections
+  // Check for essential sections (removed experience)
   const sections = {
     contact_info: checkContactInfo(resumeText),
     summary: checkSummary(text),
-    experience: checkExperience(text),
     education: checkEducation(text),
     skills: checkSkills(text),
     formatting: 85 // Will be calculated separately
@@ -189,20 +186,6 @@ const checkSummary = (text: string): number => {
   if (!hasSummary) return 30;
   if (wordCount > 300) return 85;
   return 70;
-};
-
-const checkExperience = (text: string): number => {
-  const hasExperience = /\b(?:experience|employment|work history|professional experience)\b/i.test(text);
-  const hasNumbers = /\d+(?:%|\+|\$|k|years?|months?)\b/g.test(text);
-  const hasBullets = /[•\-\*]\s+/.test(text);
-  
-  if (!hasExperience) return 25;
-  
-  let score = 60;
-  if (hasNumbers) score += 20;
-  if (hasBullets) score += 15;
-  
-  return Math.min(score, 95);
 };
 
 const checkEducation = (text: string): number => {
