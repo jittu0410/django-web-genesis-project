@@ -166,15 +166,13 @@ const analyzeSections = (resumeText: string) => {
 
 const checkContactInfo = (text: string): number => {
   const hasEmail = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/.test(text);
-  const hasPhone = /(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/.test(text);
+  const hasPhone = /\+91[-.\s]?\d{10}|\+91[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/.test(text);
   const hasLinkedIn = /linkedin\.com|linkedin/i.test(text);
-  const hasAddress = /\b\d+\s+\w+.*(?:street|st|avenue|ave|road|rd|drive|dr|lane|ln)\b/i.test(text);
   
   let score = 0;
   if (hasEmail) score += 40;
-  if (hasPhone) score += 30;
+  if (hasPhone) score += 40;  // Increased from 30 to 40 (added the 10 from address)
   if (hasLinkedIn) score += 20;
-  if (hasAddress) score += 10;
   
   return Math.min(score, 100);
 };

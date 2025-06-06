@@ -138,15 +138,13 @@ Various professional skills and competencies`
   // Helper function to get contact info breakdown
   const getContactInfoBreakdown = (resumeText: string) => {
     const hasEmail = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/.test(resumeText);
-    const hasPhone = /(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/.test(resumeText);
+    const hasPhone = /\+91[-.\s]?\d{10}|\+91[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/.test(resumeText);
     const hasLinkedIn = /linkedin\.com|linkedin/i.test(resumeText);
-    const hasAddress = /\b\d+\s+\w+.*(?:street|st|avenue|ave|road|rd|drive|dr|lane|ln)\b/i.test(resumeText);
     
     return {
       email: { found: hasEmail, points: hasEmail ? 40 : 0, maxPoints: 40 },
-      phone: { found: hasPhone, points: hasPhone ? 30 : 0, maxPoints: 30 },
-      linkedin: { found: hasLinkedIn, points: hasLinkedIn ? 20 : 0, maxPoints: 20 },
-      address: { found: hasAddress, points: hasAddress ? 10 : 0, maxPoints: 10 }
+      phone: { found: hasPhone, points: hasPhone ? 40 : 0, maxPoints: 40 },
+      linkedin: { found: hasLinkedIn, points: hasLinkedIn ? 20 : 0, maxPoints: 20 }
     };
   };
 
@@ -321,13 +319,13 @@ Various professional skills and competencies`
                           // Use the same mock text logic as in extractTextFromFile
                           uploadedFile.name.toLowerCase().includes('dev') || uploadedFile.name.toLowerCase().includes('software')
                             ? `John Smith
-Email: john.smith@email.com | Phone: (555) 123-4567 | LinkedIn: linkedin.com/in/johnsmith
+Email: john.smith@email.com | Phone: +91 98765 43210 | LinkedIn: linkedin.com/in/johnsmith
 
 PROFESSIONAL SUMMARY
 Experienced Full Stack Developer with 5+ years of experience building scalable web applications. 
 Proficient in JavaScript, React, Node.js, and modern development practices.`
                             : `${uploadedFile.name.replace(/\.[^/.]+$/, "")}
-Email: contact@email.com
+Email: contact@email.com | Phone: +91 87654 32109
 
 EXPERIENCE
 Professional with experience in various projects and responsibilities.`
@@ -343,7 +341,7 @@ Professional with experience in various projects and responsibilities.`
                             </div>
                             <div className={`flex items-center justify-between p-2 rounded ${contactBreakdown.phone.found ? 'bg-green-900/30' : 'bg-red-900/30'}`}>
                               <span className="flex items-center gap-2">
-                                {contactBreakdown.phone.found ? '✅' : '❌'} Phone number {contactBreakdown.phone.found ? 'found' : 'missing'}
+                                {contactBreakdown.phone.found ? '✅' : '❌'} Phone number with +91 {contactBreakdown.phone.found ? 'found' : 'missing'}
                               </span>
                               <span className="text-sm">+{contactBreakdown.phone.points} points (max {contactBreakdown.phone.maxPoints})</span>
                             </div>
@@ -352,12 +350,6 @@ Professional with experience in various projects and responsibilities.`
                                 {contactBreakdown.linkedin.found ? '✅' : '❌'} LinkedIn profile {contactBreakdown.linkedin.found ? 'found' : 'missing'}
                               </span>
                               <span className="text-sm">+{contactBreakdown.linkedin.points} points (max {contactBreakdown.linkedin.maxPoints})</span>
-                            </div>
-                            <div className={`flex items-center justify-between p-2 rounded ${contactBreakdown.address.found ? 'bg-green-900/30' : 'bg-red-900/30'}`}>
-                              <span className="flex items-center gap-2">
-                                {contactBreakdown.address.found ? '✅' : '❌'} Address {contactBreakdown.address.found ? 'found' : 'missing'}
-                              </span>
-                              <span className="text-sm">+{contactBreakdown.address.points} points (max {contactBreakdown.address.maxPoints})</span>
                             </div>
                             <div className="border-t border-gray-600 pt-2 mt-3">
                               <div className="flex items-center justify-between font-semibold">
