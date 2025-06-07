@@ -40,12 +40,12 @@ export const analyzeResumeContent = (resumeText: string, jobDescription?: string
     readability_consistency: readabilityScore
   };
   
-  // Weighted calculation: 50% keyword + 15% section + 20% formatting + 15% readability
+  // Weighted calculation: 20% keyword + 25% section + 30% formatting + 25% readability
   const ats_score = Math.round(
-    0.5 * keywordAnalysis.score +
-    0.15 * sectionAnalysis.score +
-    0.2 * formattingScore +
-    0.15 * readabilityScore
+    0.2 * keywordAnalysis.score +
+    0.25 * sectionAnalysis.score +
+    0.3 * formattingScore +
+    0.25 * readabilityScore
   );
   
   console.log('ATS Score breakdown:', scoreBreakdown);

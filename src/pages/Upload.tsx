@@ -135,19 +135,6 @@ Various professional skills and competencies`
     }
   };
 
-  // Helper function to get contact info breakdown
-  const getContactInfoBreakdown = (resumeText: string) => {
-    const hasEmail = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/.test(resumeText);
-    const hasPhone = /\+91[-.\s]?\d{10}|\+91[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/.test(resumeText);
-    const hasLinkedIn = /linkedin\.com|linkedin/i.test(resumeText);
-    
-    return {
-      email: { found: hasEmail, points: hasEmail ? 40 : 0, maxPoints: 40 },
-      phone: { found: hasPhone, points: hasPhone ? 40 : 0, maxPoints: 40 },
-      linkedin: { found: hasLinkedIn, points: hasLinkedIn ? 20 : 0, maxPoints: 20 }
-    };
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-purple-950 text-white">
       <div className="container mx-auto px-4 py-8">
@@ -258,7 +245,7 @@ Various professional skills and competencies`
                       {analysisResult.score_breakdown.keyword_match}%
                     </div>
                     <div className="text-sm text-gray-300">Keyword Match</div>
-                    <div className="text-xs text-gray-400">50% weight</div>
+                    <div className="text-xs text-gray-400">20% weight</div>
                   </div>
                   
                   <div className="bg-green-900/30 rounded-lg p-4 text-center border border-green-500/30">
@@ -267,7 +254,7 @@ Various professional skills and competencies`
                       {analysisResult.score_breakdown.section_match}%
                     </div>
                     <div className="text-sm text-gray-300">Section Match</div>
-                    <div className="text-xs text-gray-400">15% weight</div>
+                    <div className="text-xs text-gray-400">25% weight</div>
                   </div>
                   
                   <div className="bg-purple-900/30 rounded-lg p-4 text-center border border-purple-500/30">
@@ -276,7 +263,7 @@ Various professional skills and competencies`
                       {analysisResult.score_breakdown.formatting_score}%
                     </div>
                     <div className="text-sm text-gray-300">Formatting</div>
-                    <div className="text-xs text-gray-400">20% weight</div>
+                    <div className="text-xs text-gray-400">30% weight</div>
                   </div>
                   
                   <div className="bg-orange-900/30 rounded-lg p-4 text-center border border-orange-500/30">
@@ -285,7 +272,7 @@ Various professional skills and competencies`
                       {analysisResult.score_breakdown.readability_consistency}%
                     </div>
                     <div className="text-sm text-gray-300">Readability</div>
-                    <div className="text-xs text-gray-400">15% weight</div>
+                    <div className="text-xs text-gray-400">25% weight</div>
                   </div>
                 </div>
 
@@ -309,56 +296,79 @@ Various professional skills and competencies`
                   </div>
                 </div>
 
-                {/* Contact Info Detailed Breakdown */}
+                {/* Summary Detailed Breakdown */}
                 {uploadedFile && (
                   <div className="mb-8">
-                    <h4 className="text-lg font-semibold text-white mb-4">📞 Contact Info Breakdown</h4>
+                    <h4 className="text-lg font-semibold text-white mb-4">📝 Summary/Objective Breakdown</h4>
                     <div className="bg-gray-700/30 rounded-lg p-4">
                       {(() => {
-                        const contactBreakdown = getContactInfoBreakdown(
-                          // Use the same mock text logic as in extractTextFromFile
-                          uploadedFile.name.toLowerCase().includes('dev') || uploadedFile.name.toLowerCase().includes('software')
-                            ? `John Smith
-Email: john.smith@email.com | Phone: +91 98765 43210 | LinkedIn: linkedin.com/in/johnsmith
-
-PROFESSIONAL SUMMARY
-Experienced Full Stack Developer with 5+ years of experience building scalable web applications. 
-Proficient in JavaScript, React, Node.js, and modern development practices.`
-                            : `${uploadedFile.name.replace(/\.[^/.]+$/, "")}
-Email: contact@email.com | Phone: +91 87654 32109
-
-EXPERIENCE
-Professional with experience in various projects and responsibilities.`
-                        );
-                        
+                        const summaryScore = analysisResult.section_scores.summary;
                         return (
-                          <div className="space-y-2">
-                            <div className={`flex items-center justify-between p-2 rounded ${contactBreakdown.email.found ? 'bg-green-900/30' : 'bg-red-900/30'}`}>
-                              <span className="flex items-center gap-2">
-                                {contactBreakdown.email.found ? '✅' : '❌'} Email address {contactBreakdown.email.found ? 'found' : 'missing'}
-                              </span>
-                              <span className="text-sm">+{contactBreakdown.email.points} points (max {contactBreakdown.email.maxPoints})</span>
-                            </div>
-                            <div className={`flex items-center justify-between p-2 rounded ${contactBreakdown.phone.found ? 'bg-green-900/30' : 'bg-red-900/30'}`}>
-                              <span className="flex items-center gap-2">
-                                {contactBreakdown.phone.found ? '✅' : '❌'} Phone number with +91 {contactBreakdown.phone.found ? 'found' : 'missing'}
-                              </span>
-                              <span className="text-sm">+{contactBreakdown.phone.points} points (max {contactBreakdown.phone.maxPoints})</span>
-                            </div>
-                            <div className={`flex items-center justify-between p-2 rounded ${contactBreakdown.linkedin.found ? 'bg-green-900/30' : 'bg-red-900/30'}`}>
-                              <span className="flex items-center gap-2">
-                                {contactBreakdown.linkedin.found ? '✅' : '❌'} LinkedIn profile {contactBreakdown.linkedin.found ? 'found' : 'missing'}
-                              </span>
-                              <span className="text-sm">+{contactBreakdown.linkedin.points} points (max {contactBreakdown.linkedin.maxPoints})</span>
-                            </div>
-                            <div className="border-t border-gray-600 pt-2 mt-3">
-                              <div className="flex items-center justify-between font-semibold">
-                                <span>Total Contact Info Score:</span>
-                                <span className={`${analysisResult.section_scores.contact_info >= 80 ? 'text-green-400' : analysisResult.section_scores.contact_info >= 60 ? 'text-yellow-400' : 'text-red-400'}`}>
-                                  {analysisResult.section_scores.contact_info}%
-                                </span>
-                              </div>
-                            </div>
+                          <div className={`p-3 rounded ${summaryScore >= 80 ? 'bg-green-900/30' : summaryScore >= 60 ? 'bg-yellow-900/30' : 'bg-red-900/30'}`}>
+                            <p className="font-semibold">Summary Section Score: {summaryScore}%</p>
+                            {summaryScore >= 80 && <p className="text-green-300">Great summary section with clear objectives and relevant details.</p>}
+                            {summaryScore >= 60 && summaryScore < 80 && <p className="text-yellow-300">Summary section is present but could be more detailed or concise.</p>}
+                            {summaryScore < 60 && <p className="text-red-300">Summary section is missing or insufficient. Consider adding a professional summary or objective.</p>}
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  </div>
+                )}
+
+                {/* Education Detailed Breakdown */}
+                {uploadedFile && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold text-white mb-4">🎓 Education Breakdown</h4>
+                    <div className="bg-gray-700/30 rounded-lg p-4">
+                      {(() => {
+                        const educationScore = analysisResult.section_scores.education;
+                        return (
+                          <div className={`p-3 rounded ${educationScore >= 80 ? 'bg-green-900/30' : educationScore >= 60 ? 'bg-yellow-900/30' : 'bg-red-900/30'}`}>
+                            <p className="font-semibold">Education Section Score: {educationScore}%</p>
+                            {educationScore >= 80 && <p className="text-green-300">Education details are well-presented with graduation years included.</p>}
+                            {educationScore >= 60 && educationScore < 80 && <p className="text-yellow-300">Education section is present but could include more details or dates.</p>}
+                            {educationScore < 60 && <p className="text-red-300">Education section is missing or lacks important details.</p>}
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  </div>
+                )}
+
+                {/* Skills Detailed Breakdown */}
+                {uploadedFile && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold text-white mb-4">🛠️ Skills Breakdown</h4>
+                    <div className="bg-gray-700/30 rounded-lg p-4">
+                      {(() => {
+                        const skillsScore = analysisResult.section_scores.skills;
+                        return (
+                          <div className={`p-3 rounded ${skillsScore >= 80 ? 'bg-green-900/30' : skillsScore >= 60 ? 'bg-yellow-900/30' : 'bg-red-900/30'}`}>
+                            <p className="font-semibold">Skills Section Score: {skillsScore}%</p>
+                            {skillsScore >= 80 && <p className="text-green-300">Skills section is comprehensive and well-detailed.</p>}
+                            {skillsScore >= 60 && skillsScore < 80 && <p className="text-yellow-300">Skills section is present but could be expanded with more relevant skills.</p>}
+                            {skillsScore < 60 && <p className="text-red-300">Skills section is missing or insufficient.</p>}
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  </div>
+                )}
+
+                {/* Formatting Detailed Breakdown */}
+                {uploadedFile && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold text-white mb-4">📄 Formatting Breakdown</h4>
+                    <div className="bg-gray-700/30 rounded-lg p-4">
+                      {(() => {
+                        const formattingScore = analysisResult.score_breakdown.formatting_score;
+                        return (
+                          <div className={`p-3 rounded ${formattingScore >= 80 ? 'bg-green-900/30' : formattingScore >= 60 ? 'bg-yellow-900/30' : 'bg-red-900/30'}`}>
+                            <p className="font-semibold">Formatting Score: {formattingScore}%</p>
+                            {formattingScore >= 80 && <p className="text-green-300">Resume formatting is clean, ATS-friendly, and consistent.</p>}
+                            {formattingScore >= 60 && formattingScore < 80 && <p className="text-yellow-300">Formatting is generally good but could be improved for ATS compatibility.</p>}
+                            {formattingScore < 60 && <p className="text-red-300">Formatting issues detected. Avoid tables, unusual characters, and inconsistent layouts.</p>}
                           </div>
                         );
                       })()}
@@ -421,10 +431,10 @@ Professional with experience in various projects and responsibilities.`
               <div>
                 <h4 className="text-purple-300 font-medium mb-2">📊 Scoring Components:</h4>
                 <ul className="text-sm text-gray-300 space-y-1">
-                  <li>• <strong>Keyword Matching (50%)</strong> - Job-specific terms</li>
-                  <li>• <strong>Section Analysis (15%)</strong> - Required resume sections</li>
-                  <li>• <strong>Formatting Check (20%)</strong> - ATS-friendly layout</li>
-                  <li>• <strong>Readability (15%)</strong> - Grammar & consistency</li>
+                  <li>• <strong>Keyword Matching (20%)</strong> - Job-specific terms</li>
+                  <li>• <strong>Section Analysis (25%)</strong> - Required resume sections</li>
+                  <li>• <strong>Formatting Check (30%)</strong> - ATS-friendly layout</li>
+                  <li>• <strong>Readability (25%)</strong> - Grammar & consistency</li>
                 </ul>
               </div>
               <div>
