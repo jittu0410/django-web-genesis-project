@@ -1,3 +1,4 @@
+
 interface ResumeAnalysis {
   ats_score: number;
   keywords_found: string[];
@@ -156,10 +157,14 @@ const analyzeSections = (resumeText: string) => {
   const sectionScores = Object.values(sections);
   const avgSectionScore = sectionScores.reduce((a, b) => a + b, 0) / sectionScores.length;
   
+  // Add 10% extra to section match score by default
+  const boostedSectionScore = Math.min(Math.round(avgSectionScore * 1.1), 100);
+  
   console.log('Section scores:', sections);
+  console.log('Original section score:', Math.round(avgSectionScore), '-> Boosted to:', boostedSectionScore);
   
   return {
-    score: Math.round(avgSectionScore),
+    score: boostedSectionScore,
     sections
   };
 };
